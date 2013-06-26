@@ -3,6 +3,25 @@ require 'optparse'
 require 'pp'
 require 'youtube_it'
 
+class Comments
+    attr_reader :data, :stats
+
+    def initialize(comments)
+      @data ||= comments
+      @stats ||= {}
+    end
+
+    def calculate
+      @data.each do |comment|
+        if !@stats.has_key?(comment.author.name)
+          @stats[comment.author.name] = 1
+        else
+          @stats[comment.author.name] = @stats[comment.author.name] + 1
+        end
+      end
+      pp "Stats: ", @stats
+    end
+end
 
 
 class Scammer
@@ -45,9 +64,11 @@ class Scammer
       video_id = @arguments[0]
     end
 
-    pp "type: ", @arguments.class
-    #client = YouTubeIt::Client.new
-    #pp "comments", client.comments(video_id)
+    #pp "type: ", @arguments.class
+    client = YouTubeIt::Client.new
+
+    dataLayer = Comments.new(client.comments(video_id))
+    dataLayer.calculate
   end
 end
 
