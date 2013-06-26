@@ -21,3 +21,8 @@ Active users on youtube is a good idea, because:
 - there is a big probability they will create a flame war in comments for your video. If they come back to leave comment - you receive +1 view. So they can generate more views then anyone else in youtube world.
 
 I think, spamming everyone with messages is a bad idea. I propose to just subscribe, it's less scammy they to show that you around. And remember, your youtube channel name - should immediately interest them.
+
+## Thanks
+youtube_it gem
+OptionParse gem
+http://www.findnwrite.com/musings/setting-parameters-of-a-ruby-class-through-command-line-arguments/

@@ -1,11 +1,12 @@
 #!/usr/bin/env ruby
 require 'optparse'
+require 'pp'
 require 'youtube_it'
+
+
 
 class Scammer
   attr_reader :optparse, :options, :mandatory,  :arguments
-
-
 
   def initialize(arguments)
     @options = {}
@@ -14,7 +15,6 @@ class Scammer
     set_options
   end
 
-  #Handle arguments
   def set_arguments(arguments)
     return if arguments.nil?
       if(arguments.kind_of?(String))
@@ -23,7 +23,7 @@ class Scammer
 	      @arguments = arguments
 	    else
         raise Exception, "Expecting either String or an Array"
-    end
+      end
   end
 
   def set_options
@@ -38,11 +38,16 @@ class Scammer
   def execute
     video_id_regex = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/
 
-    if ARGV[0].start_with?("http")
-      video_id = ARGV[0].match(video_id_regex)[2]
+    if @arguments[0].start_with?("http")
+      video_id = @arguments[0].match(video_id_regex)[2]
+    else
+      #video_id is also accepted
+      video_id = @arguments[0]
     end
 
-    print video_id
+    pp "type: ", @arguments.class
+    #client = YouTubeIt::Client.new
+    #pp "comments", client.comments(video_id)
   end
 end
 
