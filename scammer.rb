@@ -46,11 +46,6 @@ class Scammer
     end
   end
 
-  def self.find_video_id(str)
-    video_id_regex = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/
-    return str.start_with?("http") ? str.match(video_id_regex)[2]: str
-  end
-
   def execute
     client = YouTubeIt::Client.new
 

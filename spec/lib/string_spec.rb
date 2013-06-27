@@ -1,9 +1,9 @@
 require 'rspec'
 require File.dirname(__FILE__) + '/../lib/string.rb'
 
-describe "Scammer" do
+describe "String" do
 
-  it 'properly accept all types of youtube links' do
+  it 'should find video_id in youtube links' do
     correct_links = {
         "http://www.youtube.com/watch?v=ksMSHtqPxPo&feature=c4-overview&playnext=1&list=TLz5MOtYmXmaY" => "ksMSHtqPxPo",
         "http://www.youtube.com/watch?v=0zM3nApSvMg&feature=feedrec_grec_index" => "0zM3nApSvMg",
@@ -19,5 +19,10 @@ describe "Scammer" do
     correct_links.keys.each do |key|
       expect(key.find_video_id).to eq(correct_links[key])
     end
+  end
+
+  it 'should raise error for incorrect youtube_id' do
+    incorrect_id = ["QdK8U-VIH_"]
+    incorrect_id.each{|id| expect{id.find_video_id}.to raise_error(OptionParser::InvalidArgument)}
   end
 end
