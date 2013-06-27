@@ -14,6 +14,10 @@ Basic idea is very simple.
 - scan through all comments and find most active users
 - start subscribing to these active users, so they will notice you and maybe subscribe back.
 
+## Usage
+ruby scammer.rb http://youtube.com/v/video_id
+ruby scammer.rb youtube_video_id
+
 ## I think my idea is cool because...
 Active users on youtube is a good idea, because:
 - they are more likely to subscribe to your channel (if you properly defined channel list)
@@ -23,6 +27,6 @@ Active users on youtube is a good idea, because:
 I think, spamming everyone with messages is a bad idea. I propose to just subscribe, it's less scammy they to show that you around. And remember, your youtube channel name - should immediately interest them.
 
 ## Thanks
-youtube_it gem
-OptionParse gem
-http://www.findnwrite.com/musings/setting-parameters-of-a-ruby-class-through-command-line-arguments/
+- youtube_it gem
+- OptionParse gem
+- http://www.findnwrite.com/musings/setting-parameters-of-a-ruby-class-through-command-line-arguments/
