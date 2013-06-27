@@ -12,11 +12,14 @@ class Comments
     end
 
     def calculate
+
       @data.each do |comment|
-        if !@stats.has_key?(comment.author.name)
-          @stats[comment.author.name] = 1
+        username = comment.author.name
+
+        if !@stats.has_key?(username)
+          @stats[username] = 1
         else
-          @stats[comment.author.name] = @stats[comment.author.name] + 1
+          @stats[username] = @stats[comment.author.name] + 1
         end
       end
       pp "Stats: ", @stats
@@ -35,6 +38,8 @@ class Scammer
   end
 
   def set_arguments(arguments)
+    pp "Raw arguments: ", arguments
+
     return if arguments.nil?
       if(arguments.kind_of?(String))
 	      @arguments = arguments.split(/\s{1,}/)
@@ -54,20 +59,15 @@ class Scammer
     end
   end
 
-  def execute
+  def self.find_video_id(str)
     video_id_regex = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/
+    return str.start_with?("http") ? str.match(video_id_regex)[2]: str
+  end
 
-    if @arguments[0].start_with?("http")
-      video_id = @arguments[0].match(video_id_regex)[2]
-    else
-      #video_id is also accepted
-      video_id = @arguments[0]
-    end
-
-    #pp "type: ", @arguments.class
+  def execute
     client = YouTubeIt::Client.new
 
-    dataLayer = Comments.new(client.comments(video_id))
+    dataLayer = Comments.new(client.comments(Scammer.find_video_id(@arguments[0])))
     dataLayer.calculate
   end
 end
