@@ -22,24 +22,22 @@ class Comments
           @stats[username] = @stats[comment.author.name] + 1
         end
       end
-      pp "Stats: ", @stats
+      pp "Stats: ", @stats.sort_by{|_key, value| value}.reverse
     end
 end
 
 
 class Scammer
-  attr_reader :optparse, :options, :mandatory,  :arguments
+  attr_reader :optparse, :arguments
 
   def initialize(arguments)
-    @options = {}
     @optparse = OptionParser.new()
     set_arguments(arguments)
     set_options
+    validate
   end
 
   def set_arguments(arguments)
-    pp "Raw arguments: ", arguments
-
     return if arguments.nil?
       if(arguments.kind_of?(String))
 	      @arguments = arguments.split(/\s{1,}/)
@@ -51,10 +49,20 @@ class Scammer
   end
 
   def set_options
-    @optparse.banner = "Usage: ruby #{File.basename(__FILE__)} youtube_link"
+    @optparse.banner = "Usage: ruby #{File.basename(__FILE__)} http://youtube_link"
 
     @optparse.on( '-h', '--help', 'Display this screen' ) do
-      puts opts
+      puts @optparse.help
+      exit
+    end
+  end
+
+  def validate
+    begin
+      @optparse.parse!(@arguments)
+    rescue OptionParser::ParseError, OptionParser::InvalidArgument, OptionParser::InvalidOption, OptionParser::MissingArgument
+      puts $!.to_s
+      puts @optparse
       exit
     end
   end

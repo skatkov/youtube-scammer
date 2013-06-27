@@ -23,6 +23,7 @@ describe "Scammer" do
 
   it 'show helps screen' do
     cls = Scammer.new("-h")
-    expect(cls.execute).to raise_error(UploadError)
+    cls.any_instance.should_receive(:help, nil)
+    cls.execute
   end
 end
