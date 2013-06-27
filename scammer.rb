@@ -3,6 +3,8 @@ require 'optparse'
 require 'youtube_it'
 require 'pp'
 require File.dirname(__FILE__) + '/scammer_engine.rb'
+require File.dirname(__FILE__) + '/lib/string.rb'
+
 
 class Scammer
   attr_reader :optparse, :arguments
@@ -52,7 +54,7 @@ class Scammer
   def execute
     client = YouTubeIt::Client.new
 
-    dataLayer = ScammerEngine.new(client.comments(Scammer.find_video_id(@arguments[0])))
+    dataLayer = ScammerEngine.new(client.comments(@arguments[0].find_video_id))
     dataLayer.calculate
   end
 end
