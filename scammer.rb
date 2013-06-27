@@ -1,31 +1,8 @@
 #!/usr/bin/env ruby
 require 'optparse'
-require 'pp'
 require 'youtube_it'
-
-class Comments
-    attr_reader :data, :stats
-
-    def initialize(comments)
-      @data ||= comments
-      @stats ||= {}
-    end
-
-    def calculate
-
-      @data.each do |comment|
-        username = comment.author.name
-
-        if !@stats.has_key?(username)
-          @stats[username] = 1
-        else
-          @stats[username] = @stats[comment.author.name] + 1
-        end
-      end
-      pp "Stats: ", @stats.sort_by{|_key, value| value}.reverse
-    end
-end
-
+require 'pp'
+require File.dirname(__FILE__) + '/scammer_engine.rb'
 
 class Scammer
   attr_reader :optparse, :arguments
@@ -75,7 +52,7 @@ class Scammer
   def execute
     client = YouTubeIt::Client.new
 
-    dataLayer = Comments.new(client.comments(Scammer.find_video_id(@arguments[0])))
+    dataLayer = ScammerEngine.new(client.comments(Scammer.find_video_id(@arguments[0])))
     dataLayer.calculate
   end
 end
