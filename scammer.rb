@@ -2,8 +2,6 @@
 require 'optparse'
 require 'pp'
 require File.dirname(__FILE__) + '/scammer_engine.rb'
-require File.dirname(__FILE__) + '/lib/string.rb'
-
 
 class Scammer
   attr_reader :optparse, :arguments, :options
@@ -11,14 +9,22 @@ class Scammer
   def initialize(arguments)
     @options = {}
     @optparse = OptionParser.new()
-    set_arguments(arguments)
     set_options
-    validate
+    begin
+      set_arguments(arguments)
+      @optparse.parse!(@arguments)
+    rescue OptionParser::ParseError, OptionParser::InvalidArgument, OptionParser::InvalidOption, OptionParser::MissingArgument
+      puts $!.to_s
+      puts @optparse
+      exit
+    end
   end
 
   def set_arguments(arguments)
     return if arguments.nil?
-      if(arguments.kind_of?(String))
+      if(arguments.size == 1)
+        raise OptionParser::InvalidArgument, "Not enough arguments"
+      elsif(arguments.kind_of?(String))
 	      @arguments = arguments.split(/\s{1,}/)
       elsif (arguments.kind_of?(Array))
 	      @arguments = arguments
@@ -30,29 +36,20 @@ class Scammer
   def set_options
     @optparse.banner = "Usage: ruby #{File.basename(__FILE__)} [options]"
 
-    @optparse.on('-y', '--youtube video_id/youtube_link', 'Display commenter chart for video') {|youtube|
-      @options[:video] = youtube.find_video_id
-    }
-    @optparse.on( '-h', '--help', 'Display this screen' ) do
-      puts @optparse
-      exit
-    end
-  end
+    @optparse.separator("------------------------")
 
-  def validate
-    begin
-      @optparse.parse!(@arguments)
-    rescue OptionParser::ParseError, OptionParser::InvalidArgument, OptionParser::InvalidOption, OptionParser::MissingArgument
-      puts $!.to_s
+    @optparse.on('-y', '--youtube YOUTUBE_ID', 'Display commenter chart for video') {|youtube|
+      @options[:video] = youtube
+    }
+    @optparse.on_tail( '-h', '--help', 'Display this screen' ) do
       puts @optparse
       exit
     end
   end
 
   def execute
-    dataLayer = ScammerEngine.new
-    dataLayer.youtube_id(@options[:video])
-    dataLayer.calculate
+    @dataLayer = ScammerEngine.new(@options)
+    @dataLayer.calculate
   end
 end
 

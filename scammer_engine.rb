@@ -1,17 +1,14 @@
 require 'pp'
 require 'youtube_it'
-
+require File.dirname(__FILE__) + '/lib/string.rb'
 
 class ScammerEngine
   attr_reader :data, :stats, :client
 
-  def initialize
+  def initialize(options)
+    @scrap_video ||= options[:video].find_video_id
     @stats ||= {}
     @client = YouTubeIt::Client.new
-  end
-
-  def youtube_id(video_id)
-    @scrap_video ||= video_id
   end
 
   def calculate
