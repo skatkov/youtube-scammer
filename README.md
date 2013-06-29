@@ -15,8 +15,10 @@ Basic idea is very simple.
 - start subscribing to these active users, so they will notice you and maybe subscribe back.
 
 ## Usage
-ruby scammer.rb http://youtube.com/v/video_id
-ruby scammer.rb youtube_video_id
+ruby scammer.rb [options]
+------------------------
+    -y, --youtube YOUTUBE_ID         Display commenter chart for video
+    -h, --help                       Display this screen
 
 ## I think my idea is cool because...
 Active users on youtube is a good idea, because:
