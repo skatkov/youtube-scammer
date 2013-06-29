@@ -1,15 +1,15 @@
 #!/usr/bin/env ruby
 require 'optparse'
-require 'youtube_it'
 require 'pp'
 require File.dirname(__FILE__) + '/scammer_engine.rb'
 require File.dirname(__FILE__) + '/lib/string.rb'
 
 
 class Scammer
-  attr_reader :optparse, :arguments
+  attr_reader :optparse, :arguments, :options
 
   def initialize(arguments)
+    @options = {}
     @optparse = OptionParser.new()
     set_arguments(arguments)
     set_options
@@ -23,15 +23,18 @@ class Scammer
       elsif (arguments.kind_of?(Array))
 	      @arguments = arguments
 	    else
-        raise Exception, "Expecting either String or an Array"
+        raise OptionParser::InvalidArgument, "Expecting either String or an Array"
       end
   end
 
   def set_options
-    @optparse.banner = "Usage: ruby #{File.basename(__FILE__)} http://youtube_link"
+    @optparse.banner = "Usage: ruby #{File.basename(__FILE__)} [options]"
 
+    @optparse.on('-y', '--youtube video_id/youtube_link', 'Display commenter chart for video') {|youtube|
+      @options[:video] = youtube.find_video_id
+    }
     @optparse.on( '-h', '--help', 'Display this screen' ) do
-      puts @optparse.help
+      puts @optparse
       exit
     end
   end
@@ -47,9 +50,8 @@ class Scammer
   end
 
   def execute
-    client = YouTubeIt::Client.new
-
-    dataLayer = ScammerEngine.new(client.comments(@arguments[0].find_video_id))
+    dataLayer = ScammerEngine.new
+    dataLayer.youtube_id(@options[:video])
     dataLayer.calculate
   end
 end
