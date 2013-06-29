@@ -16,7 +16,7 @@ Basic idea is very simple.
 
 ## Usage
 ruby scammer.rb [options]
-options:
+------------------------
     -y, --youtube YOUTUBE_ID         Display commenter chart for video
     -h, --help                       Display this screen
 
