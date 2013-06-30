@@ -10,8 +10,8 @@ class Scammer
   def initialize(arguments)
     @options = {}
     @optparse = OptionParser.new()
-    set_options
     set_arguments(arguments)
+    set_options
     @optparse.parse!(@arguments)
   end
 
@@ -64,6 +64,7 @@ if __FILE__ == $0
     puts "Use --help for the force"
     exit
   end
+
 end
 
 

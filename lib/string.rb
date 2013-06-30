@@ -8,4 +8,8 @@ class String
     raise OptionParser::InvalidArgument, "Incorrect video_id #{self}" if self.size!=11
     return self
   end
+
+  def find_user_id
+    self.match(/user\D(\w*)/)[1]
+  end
 end

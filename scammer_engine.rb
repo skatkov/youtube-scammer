@@ -11,17 +11,33 @@ class ScammerEngine
   }
 
   def initialize(options)
-    @scrap_video ||= options[:video].find_video_id
+    pp options
+    @scrap_video, @data = [], []
+    @scrap_video << options[:video].find_video_id if !options[:video].nil?
+    @scrap_profile ||= options[:profile].find_user_id if !options[:profile].nil?
     @stats ||= {}
     @client = YouTubeIt::Client.new
   end
 
-  def calculate
-    @data = client.comments(@scrap_video)
+  def find_popular_videos(profile_id)
+    @data = @client.videos_by(:user => profile_id, :most_viewed => TRUE).videos
+    @data.each do |rec|
+      pp rec.unique_id, rec.view_count
+    end
+  end
+
+  def scrap_comments(video_id)
+    @data = client.comments(video_id)
     @data.each do |comment|
       username = comment.author.name
       @stats[username] = !@stats.has_key?(username) ? 1: @stats[username] + 1
     end
+  end
+
+  def calculate
+    scrap_comments(@scrap_video) if !@scrap_video.nil?
+    find_popular_videos(@scrap_profile) if !@scrap_profile.nil?
+    output
   end
 
   def output
