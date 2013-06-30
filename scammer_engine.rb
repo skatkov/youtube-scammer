@@ -11,8 +11,12 @@ class ScammerEngine
     @scrap_video = []
     @scrap_video << options[:video].find_video_id if !options[:video].nil?
     @scrap_profile ||= options[:profile].find_user_id if !options[:profile].nil?
-    @client = YouTubeIt::Client.new
+    @client = connect_youtube(options)
     @comments = CommentStat.new
+  end
+
+  def connect_youtube(options)
+    options[:api_key].nil? ? YouTubeIt::Client.new : YouTubeIt::Client.new(:dev_key => options[:api_key])
   end
 
   def find_popular_videos(profile_id)
