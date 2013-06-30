@@ -11,6 +11,7 @@ class Scammer
     @options = {}
     @optparse = OptionParser.new()
     set_arguments(arguments)
+    open_config("/default.yml")
     set_options
     @optparse.parse!(@arguments)
   end
@@ -33,10 +34,7 @@ class Scammer
     @optparse.banner = "NB! Youtube links (starting with 'http') accepted as PROFILE/VIDEO_ID"
     @optparse.separator("------------------------")
 
-
-    @optparse.on('-f', '--configfile PATH', String, 'Set configuration file') {|path|
-      options.merge(Hash[YAML::load(open(path)).map { |k, v| [k.to_sym, v] }])
-    }
+    @optparse.on('-f', '--configfile PATH', String, 'Set configuration file') {|path| open_config(path)}
     @optparse.on('-p', '--profile PROFILE', 'Display active commenters for youtube profile') { |profile|
       @options[:profile] = profile
     }
@@ -47,6 +45,10 @@ class Scammer
       puts @optparse
       exit
     end
+  end
+
+  def open_config(path)
+    @options.merge!(Hash[*YAML::load(File.read(File.dirname(__FILE__)+ path))])
   end
 
   def execute
