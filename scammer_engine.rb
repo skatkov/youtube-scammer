@@ -5,6 +5,11 @@ require File.dirname(__FILE__) + '/lib/string.rb'
 class ScammerEngine
   attr_reader :data, :stats, :client
 
+  default_config = {
+      :api_key => nil,
+      :youtube_login => nil
+  }
+
   def initialize(options)
     @scrap_video ||= options[:video].find_video_id
     @stats ||= {}
@@ -17,6 +22,9 @@ class ScammerEngine
       username = comment.author.name
       @stats[username] = !@stats.has_key?(username) ? 1: @stats[username] + 1
     end
+  end
+
+  def output
     pp "Stats: ", @stats.sort_by{|_key, value| value}.reverse
   end
 end
