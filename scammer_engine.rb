@@ -1,6 +1,7 @@
 require 'pp'
 require 'youtube_it'
 require File.dirname(__FILE__) + '/lib/string.rb'
+require File.dirname(__FILE__) + '/model/profile_videos.rb'
 
 class ScammerEngine
   attr_reader :data, :stats, :client
@@ -11,7 +12,6 @@ class ScammerEngine
   }
 
   def initialize(options)
-    pp options
     @scrap_video, @data = [], []
     @scrap_video << options[:video].find_video_id if !options[:video].nil?
     @scrap_profile ||= options[:profile].find_user_id if !options[:profile].nil?
@@ -20,10 +20,8 @@ class ScammerEngine
   end
 
   def find_popular_videos(profile_id)
-    @data = @client.videos_by(:user => profile_id, :most_viewed => TRUE).videos
-    @data.each do |rec|
-      pp rec.unique_id, rec.view_count
-    end
+    video = ProfileVideos.new(@client.videos_by(:user => profile_id, :most_viewed => TRUE).videos)
+    pp video.popular
   end
 
   def scrap_comments(video_id)
@@ -35,7 +33,7 @@ class ScammerEngine
   end
 
   def calculate
-    scrap_comments(@scrap_video) if !@scrap_video.nil?
+    scrap_comments(@scrap_video) if !@scrap_video.empty?
     find_popular_videos(@scrap_profile) if !@scrap_profile.nil?
     output
   end
