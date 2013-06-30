@@ -25,4 +25,11 @@ describe "String" do
     incorrect_id = ["QdK8U-VIH_"]
     incorrect_id.each{|id| expect{id.find_video_id}.to raise_error(OptionParser::InvalidArgument)}
   end
+
+  it 'should find username from youtube link' do
+    profile_link = {"prisonfightorg" => "http://www.youtube.com/user/prisonfightorg"}
+    profile_link.keys.each do |key|
+      expect(profile_link[key].find_user_id).to eq(key)
+    end
+  end
 end

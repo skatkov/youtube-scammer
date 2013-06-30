@@ -2,6 +2,7 @@ require 'pp'
 require 'youtube_it'
 require File.dirname(__FILE__) + '/lib/string.rb'
 require File.dirname(__FILE__) + '/model/profile_videos.rb'
+require File.dirname(__FILE__) + '/model/comment_stat.rb'
 
 class ScammerEngine
   attr_reader :data, :stats, :client
@@ -25,7 +26,7 @@ class ScammerEngine
   end
 
   def scrap_comments(video_id)
-    @data = client.comments(video_id)
+    @data = @client.comments(video_id)
     @data.each do |comment|
       username = comment.author.name
       @stats[username] = !@stats.has_key?(username) ? 1: @stats[username] + 1

@@ -26,7 +26,6 @@ describe 'Scammer' do
 
   it 'should accept Array' do
     client = Scammer.new(["-y", "test1234567", "test1234569", "-p", "test01", "test02"])
-    pp client.options
     client.options[:video].should eq(["test1234567", "test1234569"])
     client.options[:profile].should eq(["test01", "test02"])
   end
