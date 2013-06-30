@@ -10,6 +10,6 @@ class String
   end
 
   def find_user_id
-    self.match(/user\D(\w*)/)[1]
+    self.match(/user(s*)\D(\w+)/)[2]
   end
 end

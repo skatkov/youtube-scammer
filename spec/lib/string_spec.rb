@@ -27,7 +27,8 @@ describe "String" do
   end
 
   it 'should find username from youtube link' do
-    profile_link = {"prisonfightorg" => "http://www.youtube.com/user/prisonfightorg"}
+    profile_link = {"prisonfightorg" => "http://www.youtube.com/user/prisonfightorg",
+                    "prisonfightorg1" =>"http://gdata.youtube.com/feeds/api/users/prisonfightorg1"}
     profile_link.keys.each do |key|
       expect(profile_link[key].find_user_id).to eq(key)
     end
