@@ -17,6 +17,8 @@ Basic idea is very simple.
 ## Usage
 ruby scammer.rb [options]
 ------------------------
+		-f, --configfile PATH 					 Set configuration file
+		-p, --profile PROFILE_LINK       Display active commenters for youtube profile
     -y, --youtube YOUTUBE_ID         Display commenter chart for video
     -h, --help                       Display this screen
 
