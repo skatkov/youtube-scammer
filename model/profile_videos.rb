@@ -1,4 +1,3 @@
-require 'pp'
 class ProfileVideos
   attr_accessor :all_videos
 

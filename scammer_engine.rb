@@ -22,7 +22,7 @@ class ScammerEngine
 
   def find_popular_videos(profile_id)
     video = ProfileVideos.new(@client.videos_by(:user => profile_id, :most_viewed => TRUE).videos)
-    pp video.popular
+    video.popular.each{|video| scrap_comments(video)}
   end
 
   def scrap_comments(video_id)
