@@ -5,7 +5,7 @@ require File.dirname(__FILE__) + '/model/profile_videos.rb'
 require File.dirname(__FILE__) + '/model/comment_stat.rb'
 
 class ScammerEngine
-  attr_reader :data, :stats, :client
+  attr_reader :comments, :stats, :client
 
   def initialize(options)
     @scrap_video = []
