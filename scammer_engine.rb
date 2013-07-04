@@ -1,8 +1,7 @@
 require 'pp'
 require 'youtube_it'
-require File.dirname(__FILE__) + '/lib/string.rb'
-require File.dirname(__FILE__) + '/model/profile_videos.rb'
-require File.dirname(__FILE__) + '/model/comment_stat.rb'
+Dir['./lib/*.rb'].each{|file| require file}
+Dir['./model/*.rb'].each{|file| require file}
 
 class ScammerEngine
   attr_reader :comments, :stats, :client

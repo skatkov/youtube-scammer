@@ -1,5 +1,5 @@
 require 'rspec'
-require File.dirname(__FILE__) + '/../scammer_engine.rb'
+require_relative '../scammer_engine.rb'
 
 def run_engine(options)
   engine = ScammerEngine.new(options)

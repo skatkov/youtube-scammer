@@ -1,5 +1,5 @@
 require 'rspec'
-require File.dirname(__FILE__) + '/../../lib/string.rb'
+require_relative '../../lib/string.rb'
 
 describe "String" do
 

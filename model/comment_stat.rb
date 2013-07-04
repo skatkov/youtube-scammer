@@ -1,4 +1,4 @@
-require File.dirname(__FILE__) + "/../lib/string.rb"
+require_relative "../lib/string.rb"
 
 class CommentStat
   attr_reader :stats

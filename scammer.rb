@@ -1,7 +1,6 @@
 #!/usr/bin/env ruby
 require 'optparse'
-require 'pp'
-require File.dirname(__FILE__) + '/scammer_engine.rb'
+require_relative 'scammer_engine.rb'
 
 class Scammer
   attr_reader :optparse, :arguments, :options
