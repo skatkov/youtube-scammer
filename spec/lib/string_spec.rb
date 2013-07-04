@@ -1,5 +1,4 @@
-require 'rspec'
-require_relative '../../lib/string.rb'
+require_relative '../spec_helper.rb'
 
 describe "String" do
 

@@ -1,5 +1,4 @@
-require 'rspec'
-require_relative '../scammer_engine.rb'
+require_relative 'spec_helper.rb'
 
 def run_engine(options)
   engine = ScammerEngine.new(options)

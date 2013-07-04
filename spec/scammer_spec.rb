@@ -1,5 +1,4 @@
-require 'rspec'
-require File.dirname(__FILE__) + '/../scammer.rb'
+require_relative 'spec_helper.rb'
 
 describe 'Scammer' do
   it 'show help' do

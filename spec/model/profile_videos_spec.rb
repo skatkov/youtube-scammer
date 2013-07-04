@@ -1,5 +1,4 @@
-require 'rspec'
-require_relative '../../model/profile_videos.rb'
+require_relative '../spec_helper.rb'
 
 describe 'ProfileVideos' do
   it 'should finds all videos' do
