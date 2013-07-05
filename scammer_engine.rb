@@ -8,8 +8,8 @@ class ScammerEngine
 
   def initialize(options)
     @scrap_video = []
-    @scrap_video << options[:video].find_video_id if !options[:video].nil?
-    @scrap_profile ||= options[:profile].find_user_id if !options[:profile].nil?
+    @scrap_video << options[:video][0].find_video_id if !options[:video].nil?
+    @scrap_profile ||= options[:profile][0].find_user_id if !options[:profile].nil?
     @client = connect_youtube(options)
     @comments = CommentStat.new
   end

@@ -32,4 +32,8 @@ describe "String" do
       expect(profile_link[key].find_user_id).to eq(key)
     end
   end
+
+  it "should not filter proper username" do
+    expect("prisonfightorg".find_user_id).to eq("prisonfightorg")
+  end
 end

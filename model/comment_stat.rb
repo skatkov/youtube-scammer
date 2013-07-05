@@ -13,7 +13,7 @@ class CommentStat
       if @stats.has_key?(user)
         update_user(user, comment)
       else
-        create_new_user(user, comment)
+        new_user(user, comment)
       end
     end
   end
@@ -23,7 +23,7 @@ class CommentStat
     @stats[username][:reply] =  comment.reply_to.nil? ? @stats[username][:reply]: @stats[username][:reply]+1
   end
 
-  def create_new_user(username, comment)
+  def new_user(username, comment)
     @stats[username] = {
         :username =>  comment.author.uri.find_user_id,
         :reply => comment.reply_to.nil? ? 1 : 0,

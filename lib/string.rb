@@ -10,6 +10,10 @@ class String
   end
 
   def find_user_id
-    self.match(/user(s*)\D(\w+)/)[2]
+    begin
+      self.match(/user(s*)\D(\w+)/)[2]
+    rescue NoMethodError
+      self
+    end
   end
 end

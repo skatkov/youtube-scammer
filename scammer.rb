@@ -4,13 +4,14 @@ require_relative 'scammer_engine.rb'
 
 class Scammer
   attr_reader :optparse, :arguments, :options
-
+  attr_writer :default_config
 
   def initialize(arguments)
+    @default_config = {:youtube_login => "prisonfight"}
     @options = {}
     @optparse = OptionParser.new()
     set_arguments(arguments)
-    open_config("/default.yml")
+    open_config()
     set_options
     @optparse.parse!(@arguments)
   end
@@ -34,11 +35,11 @@ class Scammer
     @optparse.separator("------------------------")
 
     @optparse.on('-f', '--configfile PATH', String, 'Set configuration file') {|path| open_config(path)}
-    @optparse.on('-p', '--profile PROFILE', 'Display active commenters for youtube profile') { |profile|
-      @options[:profile] = profile
+    @optparse.on('-p','--profile=[a,b,c]', Array, 'Display active commenters for youtube profile') { |profile|
+      @options[:profile] = profile.collect(&:strip)
     }
-    @optparse.on('-y', '--youtube VIDEO_ID', 'Display commenter chart for video') {|youtube|
-      @options[:video] = youtube
+    @optparse.on('-y', '--youtube=[a,x,y]', Array, 'Display commenter chart for video') {|youtube|
+      @options[:video] = youtube.collect(&:strip)
     }
     @optparse.on_tail( '-h', '--help', 'Display this screen' ) do
       puts @optparse
@@ -46,8 +47,12 @@ class Scammer
     end
   end
 
-  def open_config(path)
-    @options.merge!(Hash[*YAML::load(File.read(File.dirname(__FILE__)+ path))])
+  def open_config(*args)
+    if args.empty?
+      @options.merge!(@default_config)
+    else
+      @options.merge!(Hash[*YAML::load(File.read(File.dirname(__FILE__)+ args[0]))])
+    end
   end
 
   def execute
