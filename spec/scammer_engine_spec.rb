@@ -6,13 +6,15 @@ def run_engine(options)
   return engine
 end
 
-describe 'ScammerEngine' do
+describe 'ScammerEngine', :vcr do
+
   it 'should accept profile links' do
     engine = run_engine({:profile => ["www.youtube.com/user/prisonfightorg"]})
     engine.comments.stats.class.should be(Hash)
   end
 
   it 'should accept youtube links' do
+
     engine = run_engine({:video => ["https://www.youtube.com/watch?v=5rqpdoDv-pI"]})
     engine.comments.stats.class.should be(Hash)
   end
