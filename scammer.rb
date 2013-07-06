@@ -58,7 +58,7 @@ class Scammer
 
   def execute
     @dataLayer = ScammerEngine.new(@options)
-    @dataLayer.calculate
+    @dataLayer.run
   end
 end
 
