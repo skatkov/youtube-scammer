@@ -5,9 +5,10 @@ require_relative 'scammer_engine.rb'
 class Scammer
   attr_reader :optparse, :arguments, :options
   attr_writer :default_config
+  @@YOUTUBE_LOGIN = "lunaticman"
 
   def initialize(arguments)
-    @default_config = {:youtube_login => "prisonfight"}
+    @default_config = {:youtube_login => @@YOUTUBE_LOGIN }
     @options = {}
     @optparse = OptionParser.new()
     set_arguments(arguments)
