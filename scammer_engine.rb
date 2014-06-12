@@ -30,5 +30,6 @@ class ScammerEngine
   def run
     add_video(@scrap_video) if !@scrap_video.empty?
     find_popular_videos(@scrap_profile) if !@scrap_profile.nil?
+    pp @comments
   end
 end

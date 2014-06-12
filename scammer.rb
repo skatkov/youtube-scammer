@@ -21,7 +21,6 @@ class Scammer
       if(arguments.size == 1)&&(arguments[0][0]!='-')
         raise OptionParser::InvalidArgument, "Not enough arguments"
       elsif(arguments.kind_of?(String))
-
 	      return arguments.split(/\s{1,}/)
       elsif (arguments.kind_of?(Array))
         return arguments
@@ -37,11 +36,9 @@ class Scammer
       optparser.separator("------------------------")
 
       optparser.on('-p','--profile=[a,b,c]', Array, 'Display active commenters for youtube profile') do |profile|
-        puts profile
         @options.profile = profile.collect(&:strip)
       end
       optparser.on('-y', '--youtube=[a,x,y]', Array, 'Display commenter chart for video') do |youtube|
-
         @options.video = youtube.collect(&:strip)
       end
       #@optparse.on('-f', '--configfile PATH', String, 'Set configuration file') {|path| open_config(path)}
