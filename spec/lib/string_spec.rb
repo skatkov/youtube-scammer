@@ -1,6 +1,6 @@
 require_relative '../spec_helper.rb'
 
-describe "String" do
+describe String do
 
   it 'should find video_id in youtube links' do
     correct_links = {
@@ -16,24 +16,24 @@ describe "String" do
     }
 
     correct_links.keys.each do |key|
-      expect(key.find_video_id).to eq(correct_links[key])
+      key.find_video_id.must_equal correct_links[key]
     end
   end
 
   it 'should raise error for incorrect youtube_id' do
     incorrect_id = ["QdK8U-VIH_"]
-    incorrect_id.each{|id| expect{id.find_video_id}.to raise_error(OptionParser::InvalidArgument)}
+    incorrect_id.each{|id| -> {id.find_video_id}.must_raise(OptionParser::InvalidArgument)}
   end
 
   it 'should find username from youtube link' do
     profile_link = {"prisonfightorg" => "http://www.youtube.com/user/prisonfightorg",
                     "prisonfightorg1" =>"http://gdata.youtube.com/feeds/api/users/prisonfightorg1"}
     profile_link.keys.each do |key|
-      expect(profile_link[key].find_user_id).to eq(key)
+      profile_link[key].find_user_id.must_equal key
     end
   end
 
   it "should not filter proper username" do
-    expect("prisonfightorg".find_user_id).to eq("prisonfightorg")
+    "prisonfightorg".find_user_id.must_equal "prisonfightorg"
   end
 end

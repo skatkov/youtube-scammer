@@ -1,17 +1,21 @@
-require 'rspec'
-require 'webmock'
-require 'vcr'
+require 'minitest/autorun'
+
 Dir['../lib/*.rb'].each{|file| require file}
 Dir['../model/*.rb'].each{|file| require file}
 require_relative '../scammer.rb'
 require_relative '../scammer_engine.rb'
 
-VCR.configure do |c|
-  c.cassette_library_dir = 'spec/cassettes'
-  c.hook_into :faraday
-  c.debug_logger = File.open("vcr_log.txt", 'w')
+#Test should be quiet
+def pp(*args)
 end
 
-RSpec.configure do |c|
-  c.treat_symbols_as_metadata_keys_with_true_values = true
+def capture_stdout(&block)
+  original_stdout = $stdout
+  $stdout = fake = StringIO.new
+  begin
+    yield
+  ensure
+    $stdout = original_stdout
+  end
+  fake.string
 end

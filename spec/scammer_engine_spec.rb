@@ -7,42 +7,30 @@ def run_engine(options)
   return engine
 end
 
-describe 'ScammerEngine' do
-  context 'User data retrieval' do
-    it 'by profile links' do
+describe ScammerEngine do
+  describe 'User data retrieval' do
+    it 'by channel links' do
       engine = run_engine({:profile => ["www.youtube.com/user/prisonfightorg"]})
-      engine.comments.stats.class.should be(Hash)
+      engine.comments.stats.must_be_kind_of Hash
     end
 
-    it 'by profile name' do
-      VCR.use_cassette('request by username') do
-        engine = run_engine({:profile => ["prisonfightorg"]})
-        engine.comments.stats.class.should be(Hash)
-      end
+    it 'by channel name' do
+      engine = run_engine({:profile => ["prisonfightorg"]})
+      engine.comments.stats.must_be_kind_of Hash
     end
 
-    it 'return error if profile is incorrect' do
-      VCR.use_cassette('request by username') do
-        engine = run_engine({:profile => ["prisonfightorg123"]})
-        engine.run
-        pp engine.stats
-      end
-    end
+    it 'return error for non-existent channel'
   end
 
-  context 'Retrive video comments' do
+  describe 'Retrive video comments' do
     it 'with youtube links' do
-      VCR.use_cassette("request_video") do
-        engine = run_engine({:video => ["https://www.youtube.com/watch?v=5rqpdoDv-pI"]})
-        engine.comments.stats.class.should be(Hash)
-      end
+      engine = run_engine({:video => ["https://www.youtube.com/watch?v=5rqpdoDv-pI"]})
+      engine.comments.stats.must_be_kind_of Hash
     end
+
     it 'with video-id' do
-      VCR.use_cassette("request by video-id") do
-        engine = run_engine({:video => ["5rqpdoDv-pI"]})
-        engine.comments.stats.class.should be(Hash)
-      end
+      engine = run_engine({:video => ["5rqpdoDv-pI"]})
+      engine.comments.stats.must_be_kind_of Hash
     end
   end
-
 end
