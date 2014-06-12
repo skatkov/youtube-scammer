@@ -1,3 +1,4 @@
 .idea/*
 default.yml
 log.txt
+vcr_log.txt

@@ -1,64 +1,60 @@
 #!/usr/bin/env ruby
 require 'optparse'
+require 'pry'
+require 'ostruct'
 require_relative 'scammer_engine.rb'
 
 class Scammer
   attr_reader :optparse, :arguments, :options
-  attr_writer :default_config
-  @@YOUTUBE_LOGIN = "lunaticman"
 
   def initialize(arguments)
-    @default_config = {:youtube_login => @@YOUTUBE_LOGIN }
-    @options = {}
-    @optparse = OptionParser.new()
-    set_arguments(arguments)
-    open_config()
-    set_options
-    @optparse.parse!(@arguments)
+    @options = OpenStruct.new(default_config)
+    set_option_parser.parse!(check_arguments(arguments))
   end
 
-  def set_arguments(arguments)
+  def default_config
+    {:youtube_login => "lunaticman" }
+  end
+
+  def check_arguments(arguments)
     return if arguments.nil?
       if(arguments.size == 1)&&(arguments[0][0]!='-')
         raise OptionParser::InvalidArgument, "Not enough arguments"
       elsif(arguments.kind_of?(String))
-	      @arguments = arguments.split(/\s{1,}/)
+
+	      return arguments.split(/\s{1,}/)
       elsif (arguments.kind_of?(Array))
-	      @arguments = arguments
+        return arguments
 	    else
         raise OptionParser::InvalidArgument, "Expecting either String or an Array"
       end
   end
 
-  def set_options
-    @optparse.banner = "Usage: ruby #{File.basename(__FILE__)} [options]"
-    @optparse.banner = "NB! Youtube links (starting with 'http') accepted as PROFILE/VIDEO_ID"
-    @optparse.separator("------------------------")
+  def set_option_parser
+    OptionParser.new do |optparser|
+      optparser.banner = "Usage: ruby #{File.basename(__FILE__)} [options]"
+      optparser.banner = "NB! Youtube links (starting with 'http') accepted as PROFILE/VIDEO_ID"
+      optparser.separator("------------------------")
 
-    @optparse.on('-f', '--configfile PATH', String, 'Set configuration file') {|path| open_config(path)}
-    @optparse.on('-p','--profile=[a,b,c]', Array, 'Display active commenters for youtube profile') { |profile|
-      @options[:profile] = profile.collect(&:strip)
-    }
-    @optparse.on('-y', '--youtube=[a,x,y]', Array, 'Display commenter chart for video') {|youtube|
-      @options[:video] = youtube.collect(&:strip)
-    }
-    @optparse.on_tail( '-h', '--help', 'Display this screen' ) do
-      puts @optparse
-      exit
-    end
-  end
+      optparser.on('-p','--profile=[a,b,c]', Array, 'Display active commenters for youtube profile') do |profile|
+        puts profile
+        @options.profile = profile.collect(&:strip)
+      end
+      optparser.on('-y', '--youtube=[a,x,y]', Array, 'Display commenter chart for video') do |youtube|
 
-  def open_config(*args)
-    if args.empty?
-      @options.merge!(@default_config)
-    else
-      @options.merge!(Hash[*YAML::load(File.read(File.dirname(__FILE__)+ args[0]))])
+        @options.video = youtube.collect(&:strip)
+      end
+      #@optparse.on('-f', '--configfile PATH', String, 'Set configuration file') {|path| open_config(path)}
+      optparser.on_tail( '-h', '--help', 'Display this screen' ) do
+        puts optparser
+        exit
+      end
     end
   end
 
   def execute
-    @dataLayer = ScammerEngine.new(@options)
-    @dataLayer.run
+    dataLayer = ScammerEngine.new(@options)
+    dataLayer.run
   end
 end
 
@@ -71,7 +67,6 @@ if __FILE__ == $0
     puts "Use --help for the force"
     exit
   end
-
 end
 
 

@@ -9,7 +9,7 @@ require_relative '../scammer_engine.rb'
 VCR.configure do |c|
   c.cassette_library_dir = 'spec/cassettes'
   c.hook_into :faraday
-  c.debug_logger = File.open("log.txt", 'w')
+  c.debug_logger = File.open("vcr_log.txt", 'w')
 end
 
 RSpec.configure do |c|
