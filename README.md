@@ -1,5 +1,5 @@
 ## About
-This is a CLI tool that helps me use SEO techniques on youtube, since I never liked SEO guys too much - I named this tool 'scammer'.
+Tool for dirty Youtube SEO guys. This is just a PROOF-OF-CONCEPT software, i don't promise you nothing (can't even promise that it works)
 
 ## Expectations
 To use this tool you have to have youtube channel with:
@@ -14,14 +14,6 @@ Basic idea is very simple.
 - scan through all comments and find most active users
 - start subscribing to these active users, so they will notice you and maybe subscribe back.
 
-## Usage
-ruby scammer.rb [options]
-------------------------
-		-f, --configfile PATH 					 Set configuration file
-		-p, --profile PROFILE_LINK       Display active commenters for youtube profile
-    -y, --youtube YOUTUBE_ID         Display commenter chart for video
-    -h, --help                       Display this screen
-
 ## I think my idea is cool because...
 Active users on youtube is a good idea, because:
 - they are more likely to subscribe to your channel (if you properly defined channel list)
@@ -30,7 +22,5 @@ Active users on youtube is a good idea, because:
 
 I think, spamming everyone with messages is a bad idea. I propose to just subscribe, it's less scammy they to show that you around. And remember, your youtube channel name - should immediately interest them.
 
-## Thanks
-- youtube_it gem
-- OptionParse gem
-- http://www.findnwrite.com/musings/setting-parameters-of-a-ruby-class-through-command-line-arguments/
+## Thanks to
+All the gems involved. My mother and to Stanislav Lem for endless inspiration.
