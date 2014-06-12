@@ -4,13 +4,15 @@ Dir['./lib/*.rb'].each{|file| require file}
 Dir['./model/*.rb'].each{|file| require file}
 
 class ScammerEngine
+  include SysLogger
   attr_reader :comments, :stats, :client
 
   def initialize(options)
+    log.debug("ScammerEngine::new(#{options})")
     @api_key = options[:api_key]
-    @scrap_video = []
-    @scrap_video << options[:video][0].find_video_id if !options[:video].nil?
-    @scrap_profile ||= options[:profile][0].find_user_id if !options[:profile].nil?
+    @scrap_videos = []
+    @scrap_videos << options[:video][0].find_video_id if !options[:video].nil?
+    @scrap_channels ||= options[:profile][0].find_user_id if !options[:profile].nil?
     @comments = CommentStat.new
   end
 
@@ -28,8 +30,10 @@ class ScammerEngine
   end
 
   def run
-    add_video(@scrap_video) if !@scrap_video.empty?
-    find_popular_videos(@scrap_profile) if !@scrap_profile.nil?
+    add_video(@scrap_videos) if !@scrap_videos.empty?
+    log.info("ScammerEnginer::run // video list finished, comments: #{@comments}")
+    find_popular_videos(@scrap_channels) if !@scrap_channel.nil?
+    log.info("ScammerEnginer::run // channels finished, comments: #{@comments}")
     pp @comments
   end
 end
