@@ -1,6 +1,7 @@
 require 'pp'
 require 'youtube_it'
-Dir['./lib/*.rb'].each{|file| require file}
+require_relative 'logger'
+Dir['./ext/*.rb'].each{|file| require file}
 Dir['./model/*.rb'].each{|file| require file}
 
 class ScammerEngine
@@ -31,9 +32,9 @@ class ScammerEngine
 
   def run
     add_video(@scrap_videos) if !@scrap_videos.empty?
-    log.info("ScammerEnginer::run // video list finished, comments: #{@comments}")
-    find_popular_videos(@scrap_channels) if !@scrap_channel.nil?
-    log.info("ScammerEnginer::run // channels finished, comments: #{@comments}")
-    pp @comments
+    log.info("ScammerEnginer::run // video list finished, comments: #{@comments.stats}")
+    find_popular_videos(@scrap_channels) if !@scrap_channels.nil?
+    log.info("ScammerEnginer::run // channels finished, comments: #{@comments.stats}")
+    pp @comments.stats.count
   end
 end

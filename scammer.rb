@@ -3,7 +3,7 @@ require 'optparse'
 require 'pry'
 require 'ostruct'
 require_relative 'logger'
-require_relative 'scammer_engine.rb'
+require_relative 'scammer_engine'
 
 module Scammer
   class Application

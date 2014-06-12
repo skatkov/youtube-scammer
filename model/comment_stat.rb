@@ -1,4 +1,4 @@
-require_relative "../lib/string.rb"
+require_relative "../ext/string"
 
 class CommentStat
   attr_reader :stats

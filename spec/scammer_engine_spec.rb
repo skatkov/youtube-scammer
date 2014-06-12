@@ -12,6 +12,7 @@ describe ScammerEngine do
     it 'by channel links' do
       engine = run_engine({:profile => ["www.youtube.com/user/prisonfightorg"]})
       engine.comments.stats.must_be_kind_of Hash
+      engine.comments.stats.count.must_equal 57
     end
 
     it 'by channel name' do
@@ -25,12 +26,12 @@ describe ScammerEngine do
   describe 'Retrive video comments' do
     it 'with youtube links' do
       engine = run_engine({:video => ["https://www.youtube.com/watch?v=5rqpdoDv-pI"]})
-      engine.comments.stats.must_be_kind_of Hash
+      engine.comments.stats.count.must_equal 25
     end
 
     it 'with video-id' do
       engine = run_engine({:video => ["5rqpdoDv-pI"]})
-      engine.comments.stats.must_be_kind_of Hash
+      engine.comments.stats.count.must_equal 25
     end
   end
 end
