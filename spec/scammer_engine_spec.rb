@@ -11,7 +11,7 @@ describe ScammerEngine do
     it 'by channel links' do
       engine = run_engine({ channel: ["www.youtube.com/user/prisonfightorg"] } )
       engine.comments.stats.must_be_kind_of Hash
-      engine.comments.stats.count.must_equal 57
+      engine.comments.stats.count.must_equal 56
     end
 
     it 'by channel name' do

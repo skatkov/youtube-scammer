@@ -1,13 +1,15 @@
 require 'sequel'
 
+
 Sequel::Model.plugin(:schema)
 
 DB = ENV['RUBY_ENV'].eql?('test') ? Sequel.sqlite('test.db') : Sequel.sqlite('database.db')
+#require_relative 'logger'
 #DB.loggers << Logger.new($stdout)
 
 unless DB.table_exists?(:channel)
   DB.create_table :channel do
-    string      :id, :unique => true, :primary_key => true
+    primary_key :id
     string      :title, :null => false
     text        :description
     integer     :likeCount, :default => 0
@@ -23,7 +25,7 @@ unless DB.table_exists? :video
   DB.create_table :video do
     string      :id, :primary_key => true
     string      :title, :null => false
-    foreign_key :channel_id, :channels
+    foreign_key :channel_id, :channel
     text        :description
     DateTime    :publishedAt
     DateTime    :updatedAt
@@ -37,8 +39,8 @@ end
 
 class Video < Sequel::Model(:video)
   unrestrict_primary_key
-  many_to_one :channels
-  many_to_many :comments
+  many_to_one :channel
+  one_to_many :comments
 end
 
 unless DB.table_exists? (:user)
@@ -54,14 +56,13 @@ end
 
 unless DB.table_exists? :comment
   DB.create_table :comment do
-    primary_key :id
-    foreign_key :user_id, :users
-    foreign_key :video_id, :videos
-    integer     :likeCount
+    foreign_key :video_id, :video
+    foreign_key :user_id, :user
+    integer     :likeCount, :default => 0
   end
 end
 
 class Comment < Sequel::Model(:comment)
-  many_to_one :users
-  many_to_many :videos
+  many_to_one :user
+  many_to_one :video
 end
