@@ -17,17 +17,17 @@ module Scammer
     end
 
     def default_config
-      {:youtube_login => "lunaticman" }
+      {youtube_login: "lunaticman" }
     end
 
     def check_arguments(arguments)
       return if arguments.nil?
-      if(arguments.size == 1)&&(arguments[0][0]!='-')
+      if arguments.size == 1 && arguments[0][0]!='-'
         log.error("Not enough arguments")
         raise OptionParser::InvalidArgument, "Not enough arguments"
-      elsif(arguments.kind_of?(String))
+      elsif arguments.kind_of? String
         return arguments.split(/\s{1,}/)
-      elsif (arguments.kind_of?(Array))
+      elsif arguments.kind_of? Array
         return arguments
       else
         log.error("Not enough arguments")
@@ -61,7 +61,6 @@ module Scammer
     end
   end
 end
-
 
 if __FILE__ == $0
   begin

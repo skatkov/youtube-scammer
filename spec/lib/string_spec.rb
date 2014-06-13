@@ -22,12 +22,12 @@ describe String do
 
   it 'should raise error for incorrect youtube_id' do
     incorrect_id = ["QdK8U-VIH_"]
-    incorrect_id.each{|id| -> {id.find_video_id}.must_raise(OptionParser::InvalidArgument)}
+    incorrect_id.each{|id| -> { id.find_video_id }.must_raise(OptionParser::InvalidArgument)}
   end
 
   it 'should find username from youtube link' do
     profile_link = {"prisonfightorg" => "http://www.youtube.com/user/prisonfightorg",
-                    "prisonfightorg1" =>"http://gdata.youtube.com/feeds/api/users/prisonfightorg1"}
+                    "prisonfightorg1" => "http://gdata.youtube.com/feeds/api/users/prisonfightorg1"}
     profile_link.keys.each do |key|
       profile_link[key].find_user_id.must_equal key
     end

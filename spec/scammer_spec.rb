@@ -2,11 +2,11 @@ require_relative 'spec_helper.rb'
 
 describe 'Scammer' do
   it 'should not accept only one option' do
-    -> {Scammer::Application.new(["error"])}.must_raise(OptionParser::InvalidArgument)
+    -> { Scammer::Application.new ["error"] }.must_raise(OptionParser::InvalidArgument)
   end
 
   it 'should accept youtube_id as one option' do
-    -> {Scammer::Application.new(["QdK8U-VIH_o"])}.must_raise(OptionParser::InvalidArgument)
+    -> { Scammer::Application.new ["QdK8U-VIH_o"] }.must_raise(OptionParser::InvalidArgument)
   end
 
   it 'should accept Strings' do

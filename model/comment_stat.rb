@@ -25,12 +25,8 @@ class CommentStat
 
   def new_user(username, comment)
     @stats[username] = {
-        :username =>  comment.author.uri.find_user_id,
-        :reply => comment.reply_to.nil? ? 1 : 0,
-        :count => 1 }
-  end
-
-  def output
-    pp "Stats: ", @stats.sort_by{|_key, data| data[:count]}.reverse
+        username:  comment.author.uri.find_user_id,
+        reply: comment.reply_to.nil? ? 1 : 0,
+        count: 1 }
   end
 end

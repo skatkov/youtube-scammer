@@ -18,11 +18,11 @@ class ScammerEngine
   end
 
   def youtube_client
-    @client ||= @api_key.nil? ? YouTubeIt::Client.new : YouTubeIt::Client.new(:dev_key => @api_key)
+    @client ||= @api_key.nil? ? YouTubeIt::Client.new : YouTubeIt::Client.new(dev_key: @api_key)
   end
 
   def find_popular_videos(profile_id)
-    video = ProfileVideos.new(youtube_client.videos_by(:user => profile_id, :most_viewed => TRUE).videos)
+    video = ProfileVideos.new(youtube_client.videos_by(user: profile_id, most_viewed: TRUE).videos)
     video.popular.each{|video| add_video(video)}
   end
 
@@ -35,6 +35,6 @@ class ScammerEngine
     log.info("ScammerEnginer::run // video list finished, comments: #{@comments.stats}")
     find_popular_videos(@scrap_channels) if !@scrap_channels.nil?
     log.info("ScammerEnginer::run // channels finished, comments: #{@comments.stats}")
-    pp @comments.stats.count
+    pp @comments
   end
 end

@@ -3,12 +3,14 @@ class ProfileVideos
 
   def initialize(data)
     @all_videos = {}
-    data.each {|rec|@all_videos[rec.unique_id] = {
-        :view_count => rec.view_count,
-        :comment_count => rec.comment_count,
-        :favorite_count => rec.favorite_count,
-        :category => rec.categories[0].label
-    } }
+    data.each do |rec|
+      @all_videos[rec.unique_id] = {
+        view_count: rec.view_count,
+        comment_count: rec.comment_count,
+        favorite_count: rec.favorite_count,
+        category: rec.categories[0].label
+    }
+    end
   end
 
   def popular
