@@ -38,11 +38,10 @@ module Scammer
     def set_option_parser
       OptionParser.new do |optparser|
         optparser.banner = "Usage: ruby #{File.basename(__FILE__)} [options]"
-        optparser.banner = "NB! Youtube links (starting with 'http') accepted as PROFILE/VIDEO_ID"
         optparser.separator("------------------------")
 
-        optparser.on('-p','--profile=[a,b,c]', Array, 'Display active commenters for youtube profile') do |profile|
-          @options.profile = profile.collect(&:strip)
+        optparser.on('-c','--channel=[a,b,c]', Array, 'Display active commenters for youtube profile') do |channel|
+          @options.channel = channel.collect(&:strip)
         end
         optparser.on('-y', '--youtube=[a,x,y]', Array, 'Display commenter chart for video') do |youtube|
           @options.video = youtube.collect(&:strip)

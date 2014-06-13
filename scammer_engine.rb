@@ -1,8 +1,8 @@
 require 'pp'
 require 'youtube_it'
 require_relative 'logger'
-Dir['./ext/*.rb'].each{|file| require file}
-Dir['./model/*.rb'].each{|file| require file}
+Dir['./ext/*.rb'].each { |file| require file }
+Dir['./model/*.rb'].each { |file| require file }
 
 class ScammerEngine
   include SysLogger
@@ -12,8 +12,8 @@ class ScammerEngine
     log.debug("ScammerEngine::new(#{options})")
     @api_key = options[:api_key]
     @scrap_videos = []
-    @scrap_videos << options[:video][0].find_video_id if !options[:video].nil?
-    @scrap_channels ||= options[:profile][0].find_user_id if !options[:profile].nil?
+    @scrap_videos << options[:video][0].find_video_id unless options[:video].nil?
+    @scrap_channels ||= options[:channel][0].find_user_id unless options[:channel].nil?
     @comments = CommentStat.new
   end
 
@@ -23,7 +23,7 @@ class ScammerEngine
 
   def find_popular_videos(profile_id)
     video = ProfileVideos.new(youtube_client.videos_by(user: profile_id, most_viewed: TRUE).videos)
-    video.popular.each{|video| add_video(video)}
+    video.popular.each {|v| add_video(v)}
   end
 
   def add_video(video_id)
@@ -31,9 +31,9 @@ class ScammerEngine
   end
 
   def run
-    add_video(@scrap_videos) if !@scrap_videos.empty?
+    add_video(@scrap_videos) unless @scrap_videos.empty?
     log.info("ScammerEnginer::run // video list finished, comments: #{@comments.stats}")
-    find_popular_videos(@scrap_channels) if !@scrap_channels.nil?
+    find_popular_videos(@scrap_channels) unless @scrap_channels.nil?
     log.info("ScammerEnginer::run // channels finished, comments: #{@comments.stats}")
     pp @comments
   end
