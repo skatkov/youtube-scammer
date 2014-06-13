@@ -2,3 +2,4 @@
 default.yml
 development.log
 vcr_log.txt
+*.db
