@@ -2,12 +2,12 @@
 require 'optparse'
 require 'pry'
 require 'ostruct'
-require_relative 'logger'
+require_relative 'logging'
 require_relative 'scammer_engine'
 
 module Scammer
   class Application
-    include SysLogger
+    include Scammer::Logging
     attr_reader :optparse, :arguments, :options
 
     def initialize(arguments)
@@ -48,7 +48,7 @@ module Scammer
         end
         #@optparse.on('-f', '--configfile PATH', String, 'Set configuration file') {|path| open_config(path)}
         optparser.on_tail( '-h', '--help', 'Display this screen' ) do
-          puts optparser
+          pp optparser
           exit
         end
       end
@@ -66,8 +66,8 @@ if __FILE__ == $0
     @cls = Scammer::Application.new(ARGV)
     @cls.execute
   rescue OptionParser::ParseError, OptionParser::InvalidArgument, OptionParser::InvalidOption, OptionParser::MissingArgument
-    puts $!.to_s
-    puts "Use --help for the force"
+    pp $!.to_s
+    pp "Use --help for the force"
     exit
   end
 end

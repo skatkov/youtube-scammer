@@ -1,11 +1,11 @@
 require 'pp'
 require 'youtube_it'
-require_relative 'logger'
+require_relative 'logging'
 Dir['./ext/*.rb'].each { |file| require file }
 Dir['./model/*.rb'].each { |file| require file }
 
 class ScammerEngine
-  include SysLogger
+  include Scammer::Logging
   attr_reader :comments, :stats, :client
 
   def initialize(options)

@@ -1,7 +1,7 @@
-require_relative '../logger'
+require_relative '../logging'
 
 class String
-  include SysLogger
+  include Scammer::Logging
 
   def find_video_id
     video_id_regex = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/
