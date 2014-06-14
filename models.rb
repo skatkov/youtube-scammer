@@ -4,28 +4,23 @@ require 'sequel'
 Sequel::Model.plugin(:schema)
 
 DB = ENV['RUBY_ENV'].eql?('test') ? Sequel.sqlite('test.db') : Sequel.sqlite('database.db')
-#require_relative 'logger'
+#require 'logging'
 #DB.loggers << Logger.new($stdout)
 
 unless DB.table_exists?(:channel)
   DB.create_table :channel do
-    primary_key :id
+    string      :id, :primary_key => true
     string      :title, :null => false
     text        :description
     integer     :likeCount, :default => 0
   end
 end
 
-class Channel < Sequel::Model(:channel)
-  unrestrict_primary_key
-  one_to_many :videos
-end
-
 unless DB.table_exists? :video
   DB.create_table :video do
-    string      :id, :primary_key => true
+    string      :id, primary_key: true
     string      :title, :null => false
-    foreign_key :channel_id, :channel
+    foreign_key :channel_id, :channel, type: String
     text        :description
     DateTime    :publishedAt
     DateTime    :updatedAt
@@ -37,10 +32,12 @@ unless DB.table_exists? :video
   end
 end
 
-class Video < Sequel::Model(:video)
-  unrestrict_primary_key
-  many_to_one :channel
-  one_to_many :comments
+unless DB.table_exists? :comment
+  DB.create_table :comment do
+    foreign_key :video_id, :video, type: String
+    foreign_key :user_id, :user
+    integer     :likeCount, :default => 0
+  end
 end
 
 unless DB.table_exists? (:user)
@@ -50,16 +47,19 @@ unless DB.table_exists? (:user)
   end
 end
 
-class User < Sequel::Model(:user)
+class Channel < Sequel::Model(:channel)
+  unrestrict_primary_key
+  one_to_many :videos
+end
+
+class Video < Sequel::Model(:video)
+  unrestrict_primary_key
+  many_to_one :channel
   one_to_many :comments
 end
 
-unless DB.table_exists? :comment
-  DB.create_table :comment do
-    foreign_key :video_id, :video
-    foreign_key :user_id, :user
-    integer     :likeCount, :default => 0
-  end
+class User < Sequel::Model(:user)
+  one_to_many :comments
 end
 
 class Comment < Sequel::Model(:comment)
