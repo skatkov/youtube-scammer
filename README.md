@@ -1,6 +1,8 @@
 ## About
 Tool for dirty Youtube SEO guys. This is just a PROOF-OF-CONCEPT software, i don't promise you nothing (can't even promise that it works)
 
+[![PullReview stats](https://www.pullreview.com/github/skatkov/youtube-scammer/badges/master.svg?)](https://www.pullreview.com/github/skatkov/youtube-scammer/reviews/master)
+
 ## Expectations
 To use this tool you have to have youtube channel with:
 - More than 2 videos on your channel
