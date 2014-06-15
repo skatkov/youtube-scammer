@@ -22,7 +22,7 @@ describe String do
 
   it 'should raise error for incorrect youtube_id' do
     incorrect_id = ['QdK8U-VIH_']
-    incorrect_id.each{ |id| -> { id.find_video_id }.must_raise(OptionParser::InvalidArgument)}
+    incorrect_id.each { |id| -> { id.find_video_id }.must_raise(OptionParser::InvalidArgument) }
   end
 
   it 'should find username from youtube link' do
@@ -33,7 +33,7 @@ describe String do
     end
   end
 
-  it "should not filter proper username" do
+  it 'should not filter proper username' do
     'prisonfightorg'.find_user_id.must_equal 'prisonfightorg'
   end
 end

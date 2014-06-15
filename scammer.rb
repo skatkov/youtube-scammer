@@ -11,27 +11,25 @@ module Scammer
     attr_reader :optparse, :arguments, :options
 
     def initialize(arguments)
-      log.info("Arguments: #{arguments}")
+      log.info( "Arguments: #{arguments}" )
       @options = OpenStruct.new(default_config)
       set_option_parser.parse!(check_arguments(arguments))
     end
 
     def default_config
-      {youtube_login: "lunaticman" }
+      { youtube_login: 'lunaticman' }
     end
 
     def check_arguments(arguments)
       return if arguments.nil?
       if arguments.size == 1 && arguments[0][0] != '-'
-        log.error("Not enough arguments")
-        raise OptionParser::InvalidArgument, "Not enough arguments"
+        raise OptionParser::InvalidArgument, 'Not enough arguments'
       elsif arguments.kind_of? String
         return arguments.split(/\s{1,}/)
       elsif arguments.kind_of? Array
         return arguments
       else
-        log.error("Not enough arguments")
-        raise OptionParser::InvalidArgument, "Expecting either String or an Array"
+        raise OptionParser::InvalidArgument, 'Expecting either String or an Array'
       end
     end
 
@@ -46,7 +44,7 @@ module Scammer
         optparser.on('-y', '--youtube=[a,x,y]', Array, 'Display commenter chart for video') do |youtube|
           @options.video = youtube.collect(&:strip)
         end
-        #@optparse.on('-f', '--configfile PATH', String, 'Set configuration file') {|path| open_config(path)}
+        # @optparse.on('-f', '--configfile PATH', String, 'Set configuration file') {|path| open_config(path)}
         optparser.on_tail('-h', '--help', 'Display this screen') do
           pp optparser
           exit

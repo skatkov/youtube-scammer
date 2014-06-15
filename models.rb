@@ -8,16 +8,16 @@ DB = ENV['RUBY_ENV'].eql?('test') ? Sequel.sqlite('test.db') : Sequel.sqlite('da
 unless DB.table_exists? :video
   DB.create_table :video do
     string      :id, primary_key: true
-    string      :title, :null => false
+    string      :title, null: false
     string      :author
     text        :description
     DateTime    :published_at
     DateTime    :updated_at
     string      :category
-    integer     :views, :default => 0
-    integer     :likes, :default => 0
-    integer     :favorites, :default => 0
-    integer     :dislikes, :default => 0
+    integer     :views, default: 0
+    integer     :likes, default: 0
+    integer     :favorites, default: 0
+    integer     :dislikes, default: 0
   end
 end
 
@@ -25,7 +25,7 @@ unless DB.table_exists? :comment
   DB.create_table :comment do
     foreign_key :video_id, :video, type: String
     foreign_key :user_id, :user
-    integer     :likes, :default => 0
+    integer     :likes, default: 0
   end
 end
 
