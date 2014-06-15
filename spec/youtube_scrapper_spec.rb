@@ -1,7 +1,6 @@
 require_relative 'spec_helper.rb'
 require_relative '../youtube_scrapper'
 
-
 describe YoutubeScrapper do
   def scrapper(options)
     engine = YoutubeScrapper.new(options)

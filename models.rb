@@ -1,11 +1,9 @@
 require 'sequel'
-
-
 Sequel::Model.plugin(:schema)
 
 DB = ENV['RUBY_ENV'].eql?('test') ? Sequel.sqlite('test.db') : Sequel.sqlite('database.db')
-#require 'logging'
-#DB.loggers << Logger.new($stdout)
+# require 'logging'
+# DB.loggers << Logger.new($stdout)
 
 unless DB.table_exists? :video
   DB.create_table :video do

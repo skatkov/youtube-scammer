@@ -22,7 +22,7 @@ module Scammer
 
     def check_arguments(arguments)
       return if arguments.nil?
-      if arguments.size == 1 && arguments[0][0]!='-'
+      if arguments.size == 1 && arguments[0][0] != '-'
         log.error("Not enough arguments")
         raise OptionParser::InvalidArgument, "Not enough arguments"
       elsif arguments.kind_of? String
@@ -40,14 +40,14 @@ module Scammer
         optparser.banner = "Usage: ruby #{File.basename(__FILE__)} [options]"
         optparser.separator("------------------------")
 
-        optparser.on('-c','--channel=[a,b,c]', Array, 'Display active commenters for youtube profile') do |channel|
+        optparser.on('-c', '--channel=[a,b,c]', Array, 'Display active commenters for youtube profile') do |channel|
           @options.channel = channel.collect(&:strip)
         end
         optparser.on('-y', '--youtube=[a,x,y]', Array, 'Display commenter chart for video') do |youtube|
           @options.video = youtube.collect(&:strip)
         end
         #@optparse.on('-f', '--configfile PATH', String, 'Set configuration file') {|path| open_config(path)}
-        optparser.on_tail( '-h', '--help', 'Display this screen' ) do
+        optparser.on_tail('-h', '--help', 'Display this screen') do
           pp optparser
           exit
         end

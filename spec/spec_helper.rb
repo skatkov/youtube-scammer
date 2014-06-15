@@ -8,7 +8,7 @@ Dir['../model/*.rb'].each { |file| require file }
 require_relative '../scammer'
 require_relative '../scammer_engine'
 
-#Test should be quiet
+# Test should be quiet
 def pp(*args); end
 
 DatabaseCleaner.strategy = :transaction
@@ -28,7 +28,7 @@ class SequelTestCase < MiniTest::Test
 
   def run(*args, &block)
     result = nil
-    Sequel::Model.db.transaction(:rollback => :always, :auto_savepoint=>true) do
+    Sequel::Model.db.transaction(rollback: :always, auto_savepoint: true) do
       result = _original_run(*args, &block)
     end
     result
