@@ -21,4 +21,19 @@ describe YoutubeScrapper do
     Comment.any_instance.stubs(:from_array).returns(nil)
     scrapper({ channel: 'prisonfightorg' })
   end
+
+  it 'should be able to scrap separate video' do
+    scrapper({video:'p_i4gAtlQ-M'})
+    Video.all.count.must_equal 1
+  end
+
+  it 'should accept array of video values' do
+    scrapper({video:['p_i4gAtlQ-M', 'OCMFAdX19Bg']})
+    Video.all.count.must_equal 2
+  end
+
+  it 'should accept array of channel values' do
+    scrapper({channel: ['prisonfightorg', 'lunaticman']})
+    Video.all.count.must_equal 10
+  end
 end
