@@ -39,10 +39,10 @@ module Scammer
         optparser.separator("------------------------")
 
         optparser.on('-c', '--channel=[a,b,c]', Array, 'Display active commenters for youtube profile') do |channel|
-          @options.channel = channel.collect(&:strip)
+          @options.channel = channel.collect(&:strip).collect{|val| val.find_user_id}
         end
         optparser.on('-y', '--youtube=[a,x,y]', Array, 'Display commenter chart for video') do |youtube|
-          @options.video = youtube.collect(&:strip)
+          @options.video = youtube.collect(&:strip).collect{|val| val.find_video_id}
         end
         # @optparse.on('-f', '--configfile PATH', String, 'Set configuration file') {|path| open_config(path)}
         optparser.on_tail('-h', '--help', 'Display this screen') do
