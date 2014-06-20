@@ -1,8 +1,6 @@
 class YoutubeScrapper
   def initialize(options)
-    @scrap_videos = []
-    @scrap_videos << options[:video][0].find_video_id unless options[:video].nil?
-    @scrap_channels ||= options[:channel][0].find_user_id unless options[:channel].nil?
+    @scrap_channels = options[:channel]
   end
 
   def client
@@ -10,9 +8,9 @@ class YoutubeScrapper
   end
 
   def run
-    resp = client.videos_by(user: 'prisonfightorg', most_viewed: TRUE)
+    resp = client.videos_by(user: @scrap_channels, most_viewed: TRUE)
     resp.videos.each do |video|
-      vdo = Video.create(id: video.unique_id, title: video.title, author: video.author.uri,
+      Video.create(id: video.unique_id, title: video.title, author: video.author.uri,
                    description: video.description)
       Comment.from_array(client.comments(video.unique_id))
     end

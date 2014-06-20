@@ -11,6 +11,12 @@ describe YoutubeScrapper do
     Video.all.count.must_equal 8
   end
 
+  it 'should get data from different channel' do
+    scrapper({ channel: 'lunaticman'})
+    Video.all.count.must_equal 2
+
+  end
+
   it 'should get all comments from popular videos' do
     Comment.any_instance.stubs(:from_array).returns(nil)
     scrapper({ channel: 'prisonfightorg' })
