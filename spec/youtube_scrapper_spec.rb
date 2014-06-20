@@ -10,4 +10,9 @@ describe YoutubeScrapper do
     scrapper({ channel: 'prisonfightorg' })
     Video.all.count.must_equal 8
   end
+
+  it 'should get all comments from popular videos' do
+    Comment.any_instance.stubs(:from_array).returns(nil)
+    scrapper({ channel: 'prisonfightorg' })
+  end
 end

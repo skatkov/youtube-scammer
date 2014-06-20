@@ -9,4 +9,5 @@ group :development do
   gem 'jazz_hands', github: 'nixme/jazz_hands', branch: 'bring-your-own-debugger'
   gem 'pry-byebug'
   gem 'database_cleaner'
+  gem 'mocha', :require => false
 end

@@ -12,8 +12,9 @@ class YoutubeScrapper
   def run
     resp = client.videos_by(user: 'prisonfightorg', most_viewed: TRUE)
     resp.videos.each do |video|
-      Video.create(id: video.unique_id, title: video.title, author: video.author.uri,
+      vdo = Video.create(id: video.unique_id, title: video.title, author: video.author.uri,
                    description: video.description)
+      Comment.from_array(vdo.id, client.comments(video.unique_id))
     end
   end
 end

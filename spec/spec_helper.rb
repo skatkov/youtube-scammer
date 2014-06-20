@@ -7,6 +7,7 @@ Dir['../ext/*.rb'].each { |file| require file }
 Dir['../model/*.rb'].each { |file| require file }
 require_relative '../scammer'
 require_relative '../scammer_engine'
+require 'mocha/setup'
 
 # Test should be quiet
 def pp(*args); end

@@ -8,7 +8,7 @@ DB = ENV['RUBY_ENV'].eql?('test') ? Sequel.sqlite('test.db') : Sequel.sqlite('da
 unless DB.table_exists? :video
   DB.create_table :video do
     string      :id, primary_key: true
-    string      :title, null: false
+    string      :title
     string      :author
     text        :description
     DateTime    :published_at
@@ -24,14 +24,14 @@ end
 unless DB.table_exists? :comment
   DB.create_table :comment do
     foreign_key :video_id, :video, type: String
-    foreign_key :user_id, :user
+    foreign_key :user_id, :user, type: String
     integer     :likes, default: 0
   end
 end
 
 unless DB.table_exists? (:user)
   DB.create_table :user do
-    primary_key :id
+    string      :id, primary_key: true
     string      :username
   end
 end
@@ -43,10 +43,21 @@ class Video < Sequel::Model(:video)
 end
 
 class User < Sequel::Model(:user)
+  unrestrict_primary_key
   one_to_many :comments
 end
 
 class Comment < Sequel::Model(:comment)
+  unrestrict_primary_key
   many_to_one :user
   many_to_one :video
+
+  def self.from_array(video_id, hsh)
+    hsh.each do |rec|
+      usr = User.find_or_create(id:rec.author.uri.split('/').last, username: rec.author.name)
+      vdo = Video.find_or_create(id: video_id)
+      usr.add_comment(video_id: vdo.id)
+    end
+
+  end
 end
