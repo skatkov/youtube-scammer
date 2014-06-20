@@ -1,5 +1,6 @@
 require 'sequel'
-Sequel::Model.plugin(:schema)
+Sequel::Model.plugin :schema
+
 
 DB = ENV['RUBY_ENV'].eql?('test') ? Sequel.sqlite('test.db') : Sequel.sqlite('database.db')
 # require 'logging'
@@ -60,3 +61,5 @@ class Comment < Sequel::Model(:comment)
 
   def self.from_array(hsh); hsh.each {|obj| Comment.from_object(obj)} end
 end
+
+Video.plugin :update_or_create

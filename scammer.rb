@@ -1,9 +1,11 @@
 #!/usr/bin/env ruby
 require 'optparse'
-require 'pry'
+require 'pp'
 require 'ostruct'
 require_relative 'logging'
-require_relative 'scammer_engine'
+Dir['./ext/*.rb'].each { |file| require file }
+require_relative 'models'
+require_relative 'youtube_scrapper'
 
 module Scammer
   class Application
@@ -53,8 +55,8 @@ module Scammer
     end
 
     def execute
-      dataLayer = ScammerEngine.new(@options)
-      dataLayer.run
+      YoutubeScrapper.new(@options).run
+      pp Comment.all
     end
   end
 end

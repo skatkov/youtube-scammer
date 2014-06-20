@@ -36,4 +36,10 @@ describe YoutubeScrapper do
     scrapper({channel: ['prisonfightorg', 'lunaticman']})
     Video.all.count.must_equal 10
   end
+
+  it 'should work twice for same params' do
+    scrapper({channel: 'lunaticman'})
+    scrapper({channel: 'lunaticman'})
+    Video.all.count.must_equal 2
+  end
 end
