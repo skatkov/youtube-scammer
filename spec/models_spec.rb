@@ -26,15 +26,18 @@ class TestUser < SequelTestCase
 end
 
 class TestComments < SequelTestCase
-
   def generate_comments(cnt)
-    arr = []
-    (0...cnt).each do |num|
+    (0...cnt).each.inject([]) do |arr, num|
       author = YouTubeIt::Model::Author.new({name: "chris #{num}", uri: "http://gdata.youtube.com/feeds/api/users/chrudge#{num}"})
-      arr << YouTubeIt::Model::Comment.new({content:'test_content', published: Time.now - 86400, title: 'test_title', updated: Time.now, url: "tag:youtube.com,2008:video:TVTw4KIv3Tw:comment:z13nv5jy4vywunrej22lhdxolp2ettiwt04",
-                                     reply_to:nil, author: author})
+      arr << YouTubeIt::Model::Comment.new({content:'test_content', published: Time.now - 86400, title: 'test_title',
+            updated: Time.now, url: "tag:youtube.com,2008:video:TVTw4KIv3Tw:comment:z13nv5jy4vywunrej22lhdxolp2ettiwt04",
+            reply_to:nil, author: author})
     end
-    arr
+  end
+
+  def test_initialize_from_object
+    comment = Comment.from_object(generate_comments(1).first)
+    comment.video_id.must_equal "TVTw4KIv3Tw"
   end
 
   def test_default_likecount
@@ -52,7 +55,7 @@ class TestComments < SequelTestCase
 
   def test_from_array
     Comment.all.count.must_equal 0
-    Comment.from_array('test_od',generate_comments(3))
+    Comment.from_array(generate_comments(3))
     Comment.all.count.must_equal 3
   end
 end

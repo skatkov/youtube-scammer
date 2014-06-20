@@ -52,12 +52,11 @@ class Comment < Sequel::Model(:comment)
   many_to_one :user
   many_to_one :video
 
-  def self.from_array(video_id, hsh)
-    hsh.each do |rec|
-      usr = User.find_or_create(id:rec.author.uri.split('/').last, username: rec.author.name)
-      vdo = Video.find_or_create(id: video_id)
-      usr.add_comment(video_id: vdo.id)
-    end
-
+  def self.from_object(obj)
+    usr = User.find_or_create(id:obj.author.uri.split('/').last, username: obj.author.name)
+    vdo = Video.find_or_create(id:obj.url.find_video_id)
+    usr.add_comment(video_id: vdo.id)
   end
+
+  def self.from_array(hsh); hsh.each {|obj| Comment.from_object(obj)} end
 end

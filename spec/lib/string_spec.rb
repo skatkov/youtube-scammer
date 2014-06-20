@@ -20,6 +20,17 @@ describe String do
     end
   end
 
+  it 'should find video_id from YoutubeIt::Comment.url' do
+    tags ={
+        'tag:youtube.com,2008:video:2GhqoUK--9g:comment:DPFrbhvDbt3D0cjZnLCnIJUrGiqnTr1isUjL_WdtQMs' => '2GhqoUK--9g',
+        'tag:youtube.com,2008:video:TVTw4KIv3Tw:comment:z13nv5jy4vywunrej22lhdxolp2ettiwt04' => 'TVTw4KIv3Tw'
+    }
+
+    tags.keys.each do |key|
+      key.find_video_id.must_equal tags[key]
+    end
+  end
+
   it 'should raise error for incorrect youtube_id' do
     incorrect_id = ['QdK8U-VIH_']
     incorrect_id.each { |id| -> { id.find_video_id }.must_raise(OptionParser::InvalidArgument) }
