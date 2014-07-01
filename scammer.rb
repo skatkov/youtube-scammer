@@ -48,7 +48,7 @@ module Scammer
         end
         # @optparse.on('-f', '--configfile PATH', String, 'Set configuration file') {|path| open_config(path)}
         optparser.on_tail('-h', '--help', 'Display this screen') do
-          pp optparser
+          puts optparser
           exit
         end
       end
